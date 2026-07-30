@@ -4,13 +4,14 @@ import streamlit as st
 import tensorflow as tf
 from PIL import Image
 
-# Configuración de página
+# Configuración de página con ícono en la pestaña/logo
 st.set_page_config(
     page_title="Clasificación de imágenes - Reciclaje",
+    page_icon="♻️",
     layout="wide",
 )
 
-# Estilos CSS con paleta colorida pero limpia (sin emojis)
+# Estilos CSS con paleta colorida pero limpia
 st.markdown("""
     <style>
     /* Fondo general */
@@ -170,7 +171,7 @@ if uploaded_file is not None:
         st.markdown("<br>", unsafe_allow_html=True)
 
         # Top 3 Predicciones con colores independientes
-        st.markdown("### 🏆 Top 3 Predicciones")
+        st.markdown("### Top 3 Predicciones")
         top3_idx = np.argsort(preds)[-3:][::-1]
         
         styles = [
