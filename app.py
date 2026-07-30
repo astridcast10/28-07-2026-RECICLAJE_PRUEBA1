@@ -32,7 +32,7 @@ def load_recycling_model():
 
 model, class_names = load_recycling_model()
 
-st.title("Clasificación de imágenes - Reciclaje - Servicio en la nube")
+st.title("Clasificación de imágenes - Reciclaje - Servicio en la nube- Astrid Castellanos")
 st.write(
     "Suba una imagen para clasificarla con el modelo MobileNetV2 entrenado."
 )
