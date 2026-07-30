@@ -52,19 +52,24 @@ if uploaded_file is not None:
 
     # Predicción
     preds = model.predict(img_array)[0]
-    top_class_idx = np.argmax(preds)
-    predicted_label = class_names[top_class_idx]
-    label_es = LABELS_ES.get(predicted_label, predicted_label)
-    confidence = preds[top_class_idx] * 100
+    
+    # Obtener las 2 clases más probables
+    top2_idx = np.argsort(preds)[-2:][::-1]
+    top1_idx, top2_idx_val = top2_idx[0], top2_idx[1]
+    
+    label_1 = class_names[top1_idx]
+    label_2 = class_names[top2_idx_val]
+    
+    prob_1 = preds[top1_idx] * 100
+    prob_2 = preds[top2_idx_val] * 100
 
-    # Muestra de resultado
-    st.success(f"**Resultado principal:** {label_es} ({confidence:.2f}% de confianza)")
+    st.success(f"**Resultado principal:** {LABELS_ES.get(label_1, label_1)} ({prob_1:.2f}% de confianza)")
 
-    # Advertencia si la confianza es baja (típico en collages u objetos múltiples)
-    if confidence < 70.0:
-        st.warning(
-            "⚠️ **Nota:** La confianza es baja. "
-            "Si la imagen contiene múltiples objetos, intenta subir una foto donde aparezca un solo objeto bien centrado."
+    # Si confunde materiales transparentes (Vidrio vs Plástico)
+    if {label_1, label_2} == {"glass", "plastic"}:
+        st.info(
+            "💡 **Sugerencia:** Los materiales transparentes como el plástico PET y el vidrio "
+            "tienen reflejos visuales muy parecidos. Para una mejor predicción, procura que se vea la tapa o el contenedor completo."
         )
 
     # Top 3
