@@ -171,7 +171,7 @@ if uploaded_file is not None:
         st.markdown("<br>", unsafe_allow_html=True)
 
         # Top 3 Predicciones con colores independientes
-        st.markdown("### Top 3 Predicciones")
+        st.markdown("### 🏆 Top 3 Predicciones")
         top3_idx = np.argsort(preds)[-3:][::-1]
         
         styles = [
